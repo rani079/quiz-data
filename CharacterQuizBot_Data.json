@@ -1,0 +1,1201 @@
+{
+  "format": "CharacterQuizBotData",
+  "version": 1,
+  "updatedAt": "2026-10-26T00:00:53.945Z",
+  "data": {
+    "CharacterQuizBot.v1.scores": [
+      {
+        "id": "name:هريدي",
+        "raw": "هريدي",
+        "points": 1,
+        "lastPointOrder": 1
+      }
+    ],
+    "CharacterQuizBot.v1.admins": [
+      {
+        "raw": "ㅤ た: ㅤㅤ𝒓𝒌𝒂𝒅",
+        "icon": "https://www.chatjawwal.com/sico/1739787311826.png"
+      },
+      {
+        "raw": "ᛃִ ִ ִ 𝖇𝖑𝖆𝖈𝖐",
+        "icon": "https://www.chatjawwal.com/sico/1747574723543.gif"
+      },
+      {
+        "raw": "هريدي",
+        "icon": "https://www.chatjawwal.com/sico/1787396676557.gif"
+      },
+      {
+        "raw": "طـارق",
+        "icon": "https://www.chatjawwal.com/sico/1736981640811.gif"
+      },
+      {
+        "raw": "•..",
+        "icon": "https://www.chatjawwal.com/sico/1792001124385.gif"
+      },
+      {
+        "raw": "‘’| 𝘽𝙀𝙄𝙎𝙊",
+        "icon": "https://www.chatjawwal.com/sico/1738708754682.gif"
+      },
+      {
+        "raw": "- ㅤRusSi ،",
+        "icon": "https://www.chatjawwal.com/sico/1791560853109.png"
+      },
+      {
+        "raw": "Nada",
+        "icon": "https://www.chatjawwal.com/sico/1785750512032.gif"
+      },
+      {
+        "raw": "' JOE ; جـُو ..",
+        "icon": "https://www.chatjawwal.com/sico/1782816862842.png"
+      },
+      {
+        "raw": "split",
+        "icon": "https://www.chatjawwal.com/sico/1737156992573.gif"
+      },
+      {
+        "raw": "SЋΈžȪPΉŘΈƝȊΛ ☻",
+        "icon": "https://www.chatjawwal.com/sico/1766609053313.gif"
+      }
+    ],
+    "CharacterQuizBot.v1.settings": {
+      "gap": 25
+    },
+    "CharacterQuizBot.v1.owners": [
+      {
+        "raw": "منـــــزوع",
+        "memberNumber": "73",
+        "icon": ""
+      },
+      {
+        "raw": "طـارق",
+        "memberNumber": "41",
+        "icon": "https://www.chatjawwal.com/sico/1736981640811.gif"
+      },
+      {
+        "raw": "ᛃִ ִ ִ 𝖇𝖑𝖆𝖈𝖐",
+        "memberNumber": "89",
+        "icon": "https://www.chatjawwal.com/sico/1747574723543.gif"
+      }
+    ],
+    "CharacterQuizBot.v1.usedFiles": {
+      "شخصياتت": [],
+      "متلازمات": [],
+      "رقم تالي": [],
+      "دبل ص": [],
+      "تفكيك": [],
+      "كتابة ارقام": [],
+      "ثعلب": [],
+      "كتابة حروف": [],
+      "نسخ ارقام": [],
+      "دبل": [],
+      "فراسة": [],
+      "تسليب": [],
+      "اكمل": [],
+      "مرادفات": [],
+      "مقصود": [],
+      "صحة": [],
+      "قدرات": [],
+      "مسيرة": [],
+      "لهجات": [],
+      "احجية": [],
+      "حرفين": [],
+      "جموع": [],
+      "اعصار": [],
+      "اول حرف": [],
+      "مختلف": [],
+      "مفرد": [],
+      "اية": [],
+      "سنابات": [],
+      "معارف": [],
+      "مؤسس": [],
+      "اول": [],
+      "اصوات": [],
+      "الفا": [],
+      "اسلام": [],
+      "مثل": [],
+      "رابط": [],
+      "سورة": [],
+      "فيزياء": [],
+      "ترتيب": [],
+      "تكوين": [],
+      "وسط": [],
+      "عواصم": [],
+      "مزاد": [],
+      "شعارات": [],
+      "اعلام": [],
+      "حيوانات": [],
+      "فاكهة": [],
+      "خضار": [],
+      "انمي": [],
+      "ايام": [],
+      "اكمال": [],
+      "تركيب صور": [],
+      "حروف": [],
+      "افتارات": [],
+      "افتارات ص": [],
+      "حالات": [],
+      "حالات ص": [],
+      "ارقام": [],
+      "حرف تالي": [],
+      "حرف سابق": [],
+      "حرف تالي ص": [],
+      "حرف سابق ص": [],
+      "اختلاف": [],
+      "استخرج": [],
+      "تجويد": [],
+      "ايموجي": [],
+      "فواصل": [],
+      "كيمياء": [],
+      "شخصيات": [],
+      "صحة ص": [],
+      "اصوات ص": [],
+      "ثقافة": [],
+      "ثقافة م": [],
+      "ثقافة ص": [],
+      "ش انمي": [],
+      "رياضة": [],
+      "اضداد": [],
+      "تركيب": [],
+      "اختيار": [],
+      "ترجمة": [],
+      "تبديل": [],
+      "ازالة": [],
+      "ازالة ص": [],
+      "اضافة": [],
+      "اضافة ص": [],
+      "تفكيك ص": [],
+      "تفكيك ع": [],
+      "تفكيك د": [],
+      "كتابة حروف د": [],
+      "كتابة ارقام د": [],
+      "نسخ ارقام د": [],
+      "اخر حرف": [],
+      "اخر": [],
+      "حرف ثاني": [],
+      "عضو": [],
+      "اغنية": [],
+      "عملات": [],
+      "ادعية": [],
+      "رقم سابق": [],
+      "رياضيات": [],
+      "رياضيات ص": [],
+      "مختلف ص": []
+    },
+    "CharacterQuizBot.v1.firstListEnabled": false,
+    "CharacterQuizBot.v1.aliases": [
+      {
+        "alias": "ᛃִ ִ ִ 𝖇𝖑𝖆𝖈𝖐",
+        "canonical": "بلاك"
+      }
+    ],
+    "CharacterQuizBot.v1.aiHistory": [
+      {
+        "id": "ai:mvoem440:0:qf70m",
+        "game": "شخصيات",
+        "gameTitle": "شخصيات",
+        "question": "من هو الممثل الأمريكي الذي لعب دور هاري بوتر في سلسلة الأفلام؟",
+        "answer": "ريان ريجاس",
+        "aliases": [],
+        "acceptedAnswers": [
+          "ريان ريجاس"
+        ],
+        "hint": "هو ممثل أمريكي شهير لعب العديد من الأدوار في سلسلة هاري بوتر",
+        "explanation": "",
+        "difficulty": 3,
+        "createdAt": 1792967597136,
+        "source": "ai"
+      },
+      {
+        "id": "ai:mvoem440:1:d5889",
+        "game": "شخصيات",
+        "gameTitle": "شخصيات",
+        "question": "ما اسم الممثلة المصرية التي لعبت دور فاطمة في مسلسل زوو؟",
+        "answer": "منة فضالي",
+        "aliases": [],
+        "acceptedAnswers": [
+          "منه فضالي"
+        ],
+        "hint": "شاركت في العديد من المسلسلات المصرية وتتميز بأدوارها القوية",
+        "explanation": "",
+        "difficulty": 3,
+        "createdAt": 1792967597136,
+        "source": "ai"
+      },
+      {
+        "id": "ai:mvoem440:2:p2ppb",
+        "game": "شخصيات",
+        "gameTitle": "شخصيات",
+        "question": "من هو اللاعب المصري الذي فاز بكأس العالم مع المنتخب المصري؟",
+        "answer": "شادي جريشة",
+        "aliases": [],
+        "acceptedAnswers": [
+          "شادي جريشه"
+        ],
+        "hint": "لعب دور حارس مرمى في كأس العالم 2010",
+        "explanation": "",
+        "difficulty": 3,
+        "createdAt": 1792967597136,
+        "source": "ai"
+      },
+      {
+        "id": "ai:mvoem440:3:747tb",
+        "game": "شخصيات",
+        "gameTitle": "شخصيات",
+        "question": "ما اسم اللاعب الجزائري الشهير الذي لعب لنادي مانشستر يونايتد؟",
+        "answer": "رياض محرز",
+        "aliases": [],
+        "acceptedAnswers": [
+          "رياض محرز"
+        ],
+        "hint": "لعب أيضًا لنادي ليستر سيتي وفاز بكأس العالم 2014 مع منتخب الجزائر",
+        "explanation": "",
+        "difficulty": 3,
+        "createdAt": 1792967597136,
+        "source": "ai"
+      },
+      {
+        "id": "ai:mvoem440:4:u4efu",
+        "game": "شخصيات",
+        "gameTitle": "شخصيات",
+        "question": "من هو لاعب كرة القدم البرازيلي الذي فاز بكأس العالم 2002؟",
+        "answer": "روبرتو كارالينو",
+        "aliases": [],
+        "acceptedAnswers": [
+          "روبرتو كارالينو"
+        ],
+        "hint": "ساهم بشكل كبير في فوز منتخب البرازيل باللقب",
+        "explanation": "",
+        "difficulty": 3,
+        "createdAt": 1792967597136,
+        "source": "ai"
+      },
+      {
+        "id": "ai:mvoem440:5:pbsgm",
+        "game": "شخصيات",
+        "gameTitle": "شخصيات",
+        "question": "ما اسم الممثلة السعودية التي لعبت دور سارة في مسلسل الأمسية؟",
+        "answer": "سلمى الشناوي",
+        "aliases": [],
+        "acceptedAnswers": [
+          "سلمى الشناوي"
+        ],
+        "hint": "شاركت في العديد من المسلسلات السعودية وتتميز بأدوارها الدرامية",
+        "explanation": "",
+        "difficulty": 3,
+        "createdAt": 1792967597136,
+        "source": "ai"
+      },
+      {
+        "id": "ai:mvoem440:6:li70p",
+        "game": "شخصيات",
+        "gameTitle": "شخصيات",
+        "question": "من هو اللاعب الإسباني الذي لعب لريال مدريد وبرشلونة؟",
+        "answer": "سيرجيو راموس",
+        "aliases": [],
+        "acceptedAnswers": [
+          "سيرجيو راموس"
+        ],
+        "hint": "له إنجازات كثيرة مع ناديه ومنتخب بلاده",
+        "explanation": "",
+        "difficulty": 3,
+        "createdAt": 1792967597136,
+        "source": "ai"
+      },
+      {
+        "id": "ai:mvoem440:7:01fmh",
+        "game": "شخصيات",
+        "gameTitle": "شخصيات",
+        "question": "ما اسم الممثل المصري الذي لعب دور مصطفى في مسلسل عشق على مرايا؟",
+        "answer": "محمد هندي",
+        "aliases": [],
+        "acceptedAnswers": [
+          "محمد هندي"
+        ],
+        "hint": "شارك في العديد من المسلسلات المصرية وتتميز أدواره بالعمق",
+        "explanation": "",
+        "difficulty": 3,
+        "createdAt": 1792967597136,
+        "source": "ai"
+      },
+      {
+        "id": "ai:mvoem440:8:73grs",
+        "game": "شخصيات",
+        "gameTitle": "شخصيات",
+        "question": "من هو اللاعب الإنجليزي الذي فاز بكأس أوروبا 2012 مع منتخب إنجلترا؟",
+        "answer": "راؤول دينغوس",
+        "aliases": [],
+        "acceptedAnswers": [
+          "راؤول دينغوس"
+        ],
+        "hint": "لعب أيضًا مع ليفربول وريال مدريد",
+        "explanation": "",
+        "difficulty": 3,
+        "createdAt": 1792967597136,
+        "source": "ai"
+      },
+      {
+        "id": "ai:mvoem440:9:6wrha",
+        "game": "شخصيات",
+        "gameTitle": "شخصيات",
+        "question": "ما اسم الممثلة المصرية التي لعبت دور سهير في مسلسل العشق الممنوع؟",
+        "answer": "إلهام شاهين",
+        "aliases": [],
+        "acceptedAnswers": [
+          "الهام شاهين",
+          "هام شاهين"
+        ],
+        "hint": "شاركت في العديد من المسلسلات المصرية وتتميز بأدوارها الجريئة",
+        "explanation": "",
+        "difficulty": 3,
+        "createdAt": 1792967597136,
+        "source": "ai"
+      },
+      {
+        "id": "ai:mvoem440:10:4if16",
+        "game": "شخصيات",
+        "gameTitle": "شخصيات",
+        "question": "من هو اللاعب المصري الذي فاز بكأس العالم 2010 مع المنتخب المصري؟",
+        "answer": "محمد أبو تريكة",
+        "aliases": [],
+        "acceptedAnswers": [
+          "محمد ابو تريكه"
+        ],
+        "hint": "له إنجازات كثيرة مع منتخب مصر وتتميز أسلوبه الدفاعي",
+        "explanation": "",
+        "difficulty": 3,
+        "createdAt": 1792967597136,
+        "source": "ai"
+      },
+      {
+        "id": "ai:mvoem440:11:l18z7",
+        "game": "شخصيات",
+        "gameTitle": "شخصيات",
+        "question": "ما اسم الممثل المصري الذي لعب دور أحمد في مسلسل الكنز؟",
+        "answer": "شريف سلامة",
+        "aliases": [],
+        "acceptedAnswers": [
+          "شريف سلامه"
+        ],
+        "hint": "شارك في العديد من المسلسلات المصرية وتتميز أداءه بالقوة",
+        "explanation": "",
+        "difficulty": 3,
+        "createdAt": 1792967597136,
+        "source": "ai"
+      },
+      {
+        "id": "ai:mvoem440:12:ra3ic",
+        "game": "شخصيات",
+        "gameTitle": "شخصيات",
+        "question": "من هو اللاعب الأرجنتيني الذي فاز بكأس العالم 2022؟",
+        "answer": "ليونيل ميسي",
+        "aliases": [],
+        "acceptedAnswers": [
+          "ليونيل ميسي"
+        ],
+        "hint": "له إنجازات كثيرة في مسيرته مع منتخب الأرجنتين ونادي برشلونة",
+        "explanation": "",
+        "difficulty": 3,
+        "createdAt": 1792967597136,
+        "source": "ai"
+      },
+      {
+        "id": "ai:mvoem440:13:1vvnk",
+        "game": "شخصيات",
+        "gameTitle": "شخصيات",
+        "question": "ما اسم الممثلة المصرية التي لعبت دور آمنة في مسلسل الراقصون؟",
+        "answer": "رانيا يوسف",
+        "aliases": [],
+        "acceptedAnswers": [
+          "رانيا يوسف"
+        ],
+        "hint": "شاركت في العديد من المسلسلات المصرية وتتميز بأدوارها الرومانسية",
+        "explanation": "",
+        "difficulty": 3,
+        "createdAt": 1792967597136,
+        "source": "ai"
+      },
+      {
+        "id": "ai:mvoem440:14:71i7w",
+        "game": "شخصيات",
+        "gameTitle": "شخصيات",
+        "question": "من هو اللاعب المصري الذي فاز بكأس العالم 2006 مع المنتخب المصري؟",
+        "answer": "محمد صلاح",
+        "aliases": [],
+        "acceptedAnswers": [
+          "محمد صلاح"
+        ],
+        "hint": "له إنجازات كثيرة في مسيرته مع منتخب مصر وليفربول",
+        "explanation": "",
+        "difficulty": 3,
+        "createdAt": 1792967597136,
+        "source": "ai"
+      },
+      {
+        "id": "ai:mvoem440:15:wq6n1",
+        "game": "شخصيات",
+        "gameTitle": "شخصيات",
+        "question": "ما اسم الممثل المصري الذي لعب دور أحمد في مسلسل عربة حلوى؟",
+        "answer": "محمد مهران",
+        "aliases": [],
+        "acceptedAnswers": [
+          "محمد مهران"
+        ],
+        "hint": "شارك في العديد من المسلسلات المصرية وتتميز أدواره بالجاذبية",
+        "explanation": "",
+        "difficulty": 3,
+        "createdAt": 1792967597136,
+        "source": "ai"
+      },
+      {
+        "id": "ai:mvoem440:16:430cb",
+        "game": "شخصيات",
+        "gameTitle": "شخصيات",
+        "question": "من هو اللاعب المصري الذي فاز بكأس العالم 2018 مع منتخب مصر؟",
+        "answer": "أحمد الشناوي",
+        "aliases": [],
+        "acceptedAnswers": [
+          "احمد الشناوي"
+        ],
+        "hint": "يلعب حارسًا مرمى ويتميز بقائمة الإنجازات مع منتخب مصر",
+        "explanation": "",
+        "difficulty": 3,
+        "createdAt": 1792967597136,
+        "source": "ai"
+      },
+      {
+        "id": "ai:mvoem440:17:pnyiz",
+        "game": "شخصيات",
+        "gameTitle": "شخصيات",
+        "question": "ما اسم الممثلة المصرية التي لعبت دور فاطمة في مسلسل الزهرة؟",
+        "answer": "هند صبري",
+        "aliases": [],
+        "acceptedAnswers": [
+          "هند صبري"
+        ],
+        "hint": "شاركت في العديد من المسلسلات المصرية وتتميز بأدوارها الدرامية",
+        "explanation": "",
+        "difficulty": 3,
+        "createdAt": 1792967597136,
+        "source": "ai"
+      },
+      {
+        "id": "ai:mvoem440:18:jkzdh",
+        "game": "شخصيات",
+        "gameTitle": "شخصيات",
+        "question": "من هو اللاعب المصري الذي فاز بكأس العالم 1990 مع المنتخب المصري؟",
+        "answer": "محمد أبوتريكة",
+        "aliases": [],
+        "acceptedAnswers": [
+          "محمد ابوتريكه"
+        ],
+        "hint": "له إنجازات كثيرة في مسيرته مع منتخب مصر وريال مدريد",
+        "explanation": "",
+        "difficulty": 3,
+        "createdAt": 1792967597136,
+        "source": "ai"
+      }
+    ],
+    "CharacterQuizBot.v1.lastFile": {},
+    "CharacterQuizBot.v1.ownerSchema": 1,
+    "CharacterQuizBot.v1.cursor": {
+      "شخصياتت": 0,
+      "متلازمات": 0,
+      "رقم تالي": 0,
+      "دبل ص": 0,
+      "تفكيك": 0,
+      "كتابة ارقام": 0,
+      "ثعلب": 0,
+      "كتابة حروف": 0,
+      "نسخ ارقام": 0,
+      "دبل": 0,
+      "فراسة": 0,
+      "تسليب": 0,
+      "اكمل": 0,
+      "مرادفات": 0,
+      "مقصود": 0,
+      "صحة": 0,
+      "قدرات": 0,
+      "مسيرة": 0,
+      "لهجات": 0,
+      "احجية": 0,
+      "حرفين": 0,
+      "جموع": 0,
+      "اعصار": 0,
+      "اول حرف": 0,
+      "مختلف": 0,
+      "مفرد": 0,
+      "اية": 0,
+      "سنابات": 0,
+      "معارف": 0,
+      "مؤسس": 0,
+      "اول": 0,
+      "اصوات": 0,
+      "الفا": 0,
+      "اسلام": 0,
+      "مثل": 0,
+      "رابط": 0,
+      "سورة": 0,
+      "فيزياء": 0,
+      "ترتيب": 0,
+      "تكوين": 0,
+      "وسط": 0,
+      "عواصم": 0,
+      "مزاد": 0,
+      "شعارات": 0,
+      "اعلام": 0,
+      "حيوانات": 0,
+      "فاكهة": 0,
+      "خضار": 0,
+      "انمي": 0,
+      "ايام": 0,
+      "اكمال": 0,
+      "تركيب صور": 0,
+      "حروف": 0,
+      "افتارات": 0,
+      "افتارات ص": 0,
+      "حالات": 0,
+      "حالات ص": 0,
+      "ارقام": 0,
+      "حرف تالي": 0,
+      "حرف سابق": 0,
+      "حرف تالي ص": 0,
+      "حرف سابق ص": 0,
+      "اختلاف": 0,
+      "استخرج": 0,
+      "تجويد": 0,
+      "ايموجي": 0,
+      "فواصل": 0,
+      "كيمياء": 0,
+      "شخصيات": 0,
+      "صحة ص": 0,
+      "اصوات ص": 0,
+      "ثقافة": 0,
+      "ثقافة م": 0,
+      "ثقافة ص": 0,
+      "ش انمي": 0,
+      "رياضة": 0,
+      "اضداد": 0,
+      "تركيب": 0,
+      "اختيار": 0,
+      "ترجمة": 0,
+      "تبديل": 0,
+      "ازالة": 0,
+      "ازالة ص": 0,
+      "اضافة": 0,
+      "اضافة ص": 0,
+      "تفكيك ص": 0,
+      "تفكيك ع": 0,
+      "تفكيك د": 0,
+      "كتابة حروف د": 0,
+      "كتابة ارقام د": 0,
+      "نسخ ارقام د": 0,
+      "اخر حرف": 0,
+      "اخر": 0,
+      "حرف ثاني": 0,
+      "عضو": 0,
+      "اغنية": 0,
+      "عملات": 0,
+      "ادعية": 0,
+      "رقم سابق": 0,
+      "رياضيات": 0,
+      "رياضيات ص": 0,
+      "مختلف ص": 0
+    },
+    "CharacterQuizBot.v1.aiSkills": {
+      "هريدي": {
+        "raw": "هريدي",
+        "answered": 8,
+        "correct": 8,
+        "streak": 8,
+        "level": 5,
+        "updatedAt": 1792972618922
+      },
+      ".": {
+        "raw": ".ً",
+        "answered": 15,
+        "correct": 14,
+        "streak": 8,
+        "level": 5,
+        "updatedAt": 1792967165558
+      }
+    },
+    "CharacterQuizBot.v1.aiQueue": [],
+    "CharacterQuizBot.v1.aiApproved": [
+      {
+        "id": "ai:mvocrlhm:0:1oq6k",
+        "game": "شخصياتت",
+        "gameTitle": "شخصياتت",
+        "question": "من هي الشخصية التي تظهر في هذه الصورة وهي تحمل كتابًا بعنوان \"مدينتي المفقودة\"؟",
+        "answer": "فاطمة الحسن",
+        "aliases": [],
+        "acceptedAnswers": [
+          "فاطمه الحسن"
+        ],
+        "hint": "هي كاتبة عربية شهيرة",
+        "explanation": "فاطمة الحسن كاتبة عربية معروفة بكتبها حول الثقافة والتراث العربي.",
+        "difficulty": 3,
+        "createdAt": 1792964493706,
+        "source": "ai"
+      },
+      {
+        "id": "ai:mvocrlhm:1:n5286",
+        "game": "شخصياتت",
+        "gameTitle": "شخصياتت",
+        "question": "من هو الشخصية التي تظهر في هذه الصورة وهو يرتدي بزة صوفية ويلتقط صورة مع زجاجة ماء؟",
+        "answer": "عبد القادر الفيصل",
+        "aliases": [],
+        "acceptedAnswers": [
+          "عبد القادر الفيصل"
+        ],
+        "hint": "هو شخصية سياسية سعودية مشهورة",
+        "explanation": "عبد القادر الفيصل كان أمير منطقة مكة المكرمة ووزيرًا للدفاع في المملكة العربية السعودية.",
+        "difficulty": 3,
+        "createdAt": 1792964493706,
+        "source": "ai"
+      },
+      {
+        "id": "ai:mvocrlhm:2:mkd67",
+        "game": "شخصياتت",
+        "gameTitle": "شخصياتت",
+        "question": "من هي الشخصية التي تظهر في هذه الصورة وهي ترتدي فستانًا أحمر وتمسح وجهها؟",
+        "answer": "سارة بزيع",
+        "aliases": [],
+        "acceptedAnswers": [
+          "ساره بزيع"
+        ],
+        "hint": "ممثلة سودانية مشهورة",
+        "explanation": "سارة بزيع ممثلة سودانية معروفة بأدوارها في السينما والتلفزيون.",
+        "difficulty": 3,
+        "createdAt": 1792964493706,
+        "source": "ai"
+      },
+      {
+        "id": "ai:mvocrlhm:3:d6lax",
+        "game": "شخصياتت",
+        "gameTitle": "شخصياتت",
+        "question": "من هو الشخصية التي تظهر في هذه الصورة وهو يرتدي لباسًا أزرق قصير ويلتقط صورة مع طفل؟",
+        "answer": "محمد بن راشد آل مكتوم",
+        "aliases": [],
+        "acceptedAnswers": [
+          "محمد بن راشد ال مكتوم"
+        ],
+        "hint": "حاكم دبي ورئيس وزراء الإمارات العربية المتحدة",
+        "explanation": "محمد بن راشد آل مكتوم هو حاكم إمارة دبي ورئيس وزراء الإمارات العربية المتحدة.",
+        "difficulty": 3,
+        "createdAt": 1792964493706,
+        "source": "ai"
+      },
+      {
+        "id": "ai:mvocrlhm:4:au2zc",
+        "game": "شخصياتت",
+        "gameTitle": "شخصياتت",
+        "question": "من هي الشخصية التي تظهر في هذه الصورة وهي ترتدي ملابس تقليدية عراقية وتجلس على كرسي خشبي؟",
+        "answer": "حليمة النجمي",
+        "aliases": [],
+        "acceptedAnswers": [
+          "حليمه النجمي"
+        ],
+        "hint": "كاتبة وناشطة ثقافية عراقية",
+        "explanation": "حليمة النجمي كاتبة وناشطة ثقافية عراقية معروفة بكتاباتها حول التراث الثقافي العربي.",
+        "difficulty": 3,
+        "createdAt": 1792964493706,
+        "source": "ai"
+      },
+      {
+        "id": "ai:mvocxnb5:0:riaa3",
+        "game": "شخصياتت",
+        "gameTitle": "شخصياتت",
+        "question": "من هي الشخصية المذكورة في هذه الصورة؟",
+        "answer": "أم كلثوم",
+        "aliases": [],
+        "acceptedAnswers": [
+          "ام كلثوم"
+        ],
+        "hint": "هي مغنية مصرية شهيرة في القرن العشرين",
+        "explanation": "因为她是一位20世纪著名的埃及女歌手。",
+        "difficulty": 3,
+        "createdAt": 1792964776001,
+        "source": "ai"
+      },
+      {
+        "id": "ai:mvocxnb5:1:gnucl",
+        "game": "شخصياتت",
+        "gameTitle": "شخصياتت",
+        "question": "من هو这个人？",
+        "answer": "卓文君",
+        "aliases": [],
+        "acceptedAnswers": [
+          "卓文君"
+        ],
+        "hint": "她是汉代著名的女诗人和才女",
+        "explanation": "因为她是中国汉代著名的女诗人和才女。",
+        "difficulty": 3,
+        "createdAt": 1792964776001,
+        "source": "ai"
+      },
+      {
+        "id": "ai:mvocxnb5:2:sb886",
+        "game": "شخصياتت",
+        "gameTitle": "شخصياتت",
+        "question": "من هي الشخصية في هذه الصورة؟",
+        "answer": "هانم فاطمة",
+        "aliases": [],
+        "acceptedAnswers": [
+          "هانم فاطمه"
+        ],
+        "hint": "هي اميرة في الأدب العربي",
+        "explanation": "因为她是一位出现在阿拉伯文学中的公主。",
+        "difficulty": 3,
+        "createdAt": 1792964776001,
+        "source": "ai"
+      },
+      {
+        "id": "ai:mvocxnb5:3:7qrhk",
+        "game": "شخصياتت",
+        "gameTitle": "شخصياتت",
+        "question": "من هو الشخص في الصورة؟",
+        "answer": "فاطمة الزهراء",
+        "aliases": [],
+        "acceptedAnswers": [
+          "فاطمه الزهراء"
+        ],
+        "hint": "她是伊斯兰教的先知穆罕默德的女儿",
+        "explanation": "因为她是在伊斯兰教中穆罕默德的女儿。",
+        "difficulty": 3,
+        "createdAt": 1792964776001,
+        "source": "ai"
+      },
+      {
+        "id": "ai:mvocxnb5:4:792hi",
+        "game": "شخصياتت",
+        "gameTitle": "شخصياتت",
+        "question": "من هي الشخصية التي تظهر في الصورة؟",
+        "answer": "صوفيا فيلارس",
+        "aliases": [],
+        "acceptedAnswers": [
+          "صوفيا فيلارس"
+        ],
+        "hint": "هي ممثلة إسبانية مشهورة",
+        "explanation": "因为她是一位著名的西班牙女演员。",
+        "difficulty": 3,
+        "createdAt": 1792964776001,
+        "source": "ai"
+      },
+      {
+        "id": "ai:mvocxnb5:5:ihajb",
+        "game": "شخصياتت",
+        "gameTitle": "شخصياتت",
+        "question": "من هو الشخص في الصورة؟",
+        "answer": "هانس شرودنر",
+        "aliases": [],
+        "acceptedAnswers": [
+          "هانس شرودنر"
+        ],
+        "hint": "هو شخصية من فيلم حرب النجوم",
+        "explanation": "因为他是一位出现在《星球大战》电影中的角色。",
+        "difficulty": 3,
+        "createdAt": 1792964776001,
+        "source": "ai"
+      },
+      {
+        "id": "ai:mvocxnb5:6:rtani",
+        "game": "شخصياتت",
+        "gameTitle": "شخصياتت",
+        "question": "من هي الشخصية التي تظهر في الصورة؟",
+        "answer": "سندريلا",
+        "aliases": [],
+        "acceptedAnswers": [
+          "سندريلا"
+        ],
+        "hint": "شخصية من حكاية أطفال",
+        "explanation": "因为她是一位出现在童话故事中的角色。",
+        "difficulty": 3,
+        "createdAt": 1792964776001,
+        "source": "ai"
+      },
+      {
+        "id": "ai:mvocxnb5:7:es8d5",
+        "game": "شخصياتت",
+        "gameTitle": "شخصياتت",
+        "question": "من هو الشخص الذي تظهر صورته؟",
+        "answer": "محمد علي باشا",
+        "aliases": [],
+        "acceptedAnswers": [
+          "محمد علي باشا"
+        ],
+        "hint": "هو حاكم مصر في القرن التاسع عشر",
+        "explanation": "因为他是一位19世纪的埃及统治者。",
+        "difficulty": 3,
+        "createdAt": 1792964776001,
+        "source": "ai"
+      },
+      {
+        "id": "ai:mvocxnb5:8:3jxak",
+        "game": "شخصياتت",
+        "gameTitle": "شخصياتت",
+        "question": "من هي الشخصية التي تظهر في الصورة؟",
+        "answer": "عائشة بنت أبي بكر",
+        "aliases": [],
+        "acceptedAnswers": [
+          "عائشه بنت ابي بكر"
+        ],
+        "hint": "هي خالة النبي محمد",
+        "explanation": "因为她是先知穆罕默德的姨姐。",
+        "difficulty": 3,
+        "createdAt": 1792964776001,
+        "source": "ai"
+      },
+      {
+        "id": "ai:mvocxnb5:9:czi58",
+        "game": "شخصياتت",
+        "gameTitle": "شخصياتت",
+        "question": "من هو الشخص في الصورة؟",
+        "answer": "سونيا غروبي",
+        "aliases": [],
+        "acceptedAnswers": [
+          "سونيا غروبي"
+        ],
+        "hint": "هي ممثلة فرنسية مشهورة",
+        "explanation": "因为她是一位著名的法国女演员。",
+        "difficulty": 3,
+        "createdAt": 1792964776001,
+        "source": "ai"
+      },
+      {
+        "id": "ai:mvocxnb5:10:2ruas",
+        "game": "شخصياتت",
+        "gameTitle": "شخصياتت",
+        "question": "من هي الشخصية في الصورة؟",
+        "answer": "سوسن بدر",
+        "aliases": [],
+        "acceptedAnswers": [
+          "سوسن بدر"
+        ],
+        "hint": "ممثلة مصرية شهيرة",
+        "explanation": "因为她是一位著名的埃及女演员。",
+        "difficulty": 3,
+        "createdAt": 1792964776001,
+        "source": "ai"
+      },
+      {
+        "id": "ai:mvocxnb5:11:5zjpx",
+        "game": "شخصياتت",
+        "gameTitle": "شخصياتت",
+        "question": "من هو الشخص الذي تظهر صورته؟",
+        "answer": "سارة برنار",
+        "aliases": [],
+        "acceptedAnswers": [
+          "ساره برنار"
+        ],
+        "hint": "ممثلة أمريكية مشهورة",
+        "explanation": "因为她是一位著名的美国女演员。",
+        "difficulty": 3,
+        "createdAt": 1792964776001,
+        "source": "ai"
+      },
+      {
+        "id": "ai:mvocxnb5:12:b9nwq",
+        "game": "شخصياتت",
+        "gameTitle": "شخصياتت",
+        "question": "من هي الشخصية التي تظهر في الصورة؟",
+        "answer": "هيفاء وهبي",
+        "aliases": [],
+        "acceptedAnswers": [
+          "هيفاء وهبي"
+        ],
+        "hint": "مغنية و ممثلة مصرية",
+        "explanation": "因为她是一位著名的埃及歌手和女演员。",
+        "difficulty": 3,
+        "createdAt": 1792964776001,
+        "source": "ai"
+      },
+      {
+        "id": "ai:mvocxnb5:13:ei1mo",
+        "game": "شخصياتت",
+        "gameTitle": "شخصياتت",
+        "question": "من هو الشخص الذي تظهر صورته؟",
+        "answer": "كاثرين هيجينز",
+        "aliases": [],
+        "acceptedAnswers": [
+          "كاثرين هيجينز"
+        ],
+        "hint": "ممثلة بريطانية مشهورة",
+        "explanation": "因为她是一位著名的英国女演员。",
+        "difficulty": 3,
+        "createdAt": 1792964776001,
+        "source": "ai"
+      },
+      {
+        "id": "ai:mvocxnb5:14:x528z",
+        "game": "شخصياتت",
+        "gameTitle": "شخصياتت",
+        "question": "من هي الشخصية في الصورة؟",
+        "answer": "هنريتا روزفلت",
+        "aliases": [],
+        "acceptedAnswers": [
+          "هنريتا روزفلت"
+        ],
+        "hint": "زوجة فرانكلين روزفلت",
+        "explanation": "因为她是富兰克林·罗斯福的妻子。",
+        "difficulty": 3,
+        "createdAt": 1792964776001,
+        "source": "ai"
+      },
+      {
+        "id": "ai:mvocxnb5:15:i7sh2",
+        "game": "شخصياتت",
+        "gameTitle": "شخصياتت",
+        "question": "من هو الشخص الذي تظهر صورته؟",
+        "answer": "سارة دورانت",
+        "aliases": [],
+        "acceptedAnswers": [
+          "ساره دورانت"
+        ],
+        "hint": "ممثلة بريطانية",
+        "explanation": "因为她是一位英国女演员。",
+        "difficulty": 3,
+        "createdAt": 1792964776001,
+        "source": "ai"
+      },
+      {
+        "id": "ai:mvocxnb5:16:bi3f1",
+        "game": "شخصياتت",
+        "gameTitle": "شخصياتت",
+        "question": "من هي الشخصية التي تظهر في الصورة؟",
+        "answer": "ليلى علوي",
+        "aliases": [],
+        "acceptedAnswers": [
+          "ليلى علوي"
+        ],
+        "hint": "ممثلة مصرية شهيرة",
+        "explanation": "因为她是一位著名的埃及女演员。",
+        "difficulty": 3,
+        "createdAt": 1792964776001,
+        "source": "ai"
+      },
+      {
+        "id": "ai:mvocxnb5:17:q16jz",
+        "game": "شخصياتت",
+        "gameTitle": "شخصياتت",
+        "question": "من هو الشخص الذي تظهر صورته؟",
+        "answer": "ماريانتا جيسونداس",
+        "aliases": [],
+        "acceptedAnswers": [
+          "ماريانتا جيسونداس"
+        ],
+        "hint": "ممثلة هولندية",
+        "explanation": "因为她是一位荷兰女演员。",
+        "difficulty": 3,
+        "createdAt": 1792964776001,
+        "source": "ai"
+      },
+      {
+        "id": "ai:mvocxnb5:18:pcg99",
+        "game": "شخصياتت",
+        "gameTitle": "شخصياتت",
+        "question": "من هي الشخصية في الصورة؟",
+        "answer": "نورهان",
+        "aliases": [],
+        "acceptedAnswers": [
+          "نورهان"
+        ],
+        "hint": "ممثلة مصرية",
+        "explanation": "因为她是一位埃及女演员。",
+        "difficulty": 3,
+        "createdAt": 1792964776001,
+        "source": "ai"
+      },
+      {
+        "id": "ai:mvocxnb5:19:2pb4u",
+        "game": "شخصياتت",
+        "gameTitle": "شخصياتت",
+        "question": "من هو الشخص الذي تظهر صورته؟",
+        "answer": "جيهان فؤاد",
+        "aliases": [],
+        "acceptedAnswers": [
+          "جيهان فؤاد"
+        ],
+        "hint": "مغنية مصرية",
+        "explanation": "因为她是一位著名的埃及女歌手。",
+        "difficulty": 3,
+        "createdAt": 1792964776001,
+        "source": "ai"
+      }
+    ],
+    "CharacterQuizBot.v1.totals": [
+      {
+        "raw": "طـارق",
+        "points": 166,
+        "firstWin": 1
+      },
+      {
+        "raw": "هريدي",
+        "points": 294,
+        "firstWin": 2
+      },
+      {
+        "raw": "بلاك",
+        "points": 206,
+        "firstWin": 3
+      },
+      {
+        "raw": ".-.soso",
+        "points": 7,
+        "firstWin": 5
+      },
+      {
+        "raw": "- ㅤRusSi ،",
+        "points": 5,
+        "firstWin": 6
+      },
+      {
+        "raw": "Bot",
+        "points": 22,
+        "firstWin": 7
+      },
+      {
+        "raw": "RoOoMa",
+        "points": 16,
+        "firstWin": 8
+      },
+      {
+        "raw": "SЋΈžȪPΉŘΈƝȊΛ ☻",
+        "points": 19,
+        "firstWin": 9
+      },
+      {
+        "raw": "亗",
+        "points": 59,
+        "firstWin": 10
+      },
+      {
+        "raw": "❦𝚂Ꭵ𝙶ɱꪖ❦",
+        "points": 13,
+        "firstWin": 11
+      },
+      {
+        "raw": "بلحاية",
+        "points": 13,
+        "firstWin": 12
+      },
+      {
+        "raw": "' JOE ; جـُو ..",
+        "points": 1,
+        "firstWin": 13
+      },
+      {
+        "raw": "Nillox",
+        "points": 13,
+        "firstWin": 14
+      },
+      {
+        "raw": "𝄞 | 𝙳𝑜𝖭 • [ 𝑹𝒊𝑶 ]",
+        "points": 3,
+        "firstWin": 15
+      },
+      {
+        "raw": "*,",
+        "points": 1,
+        "firstWin": 16
+      },
+      {
+        "raw": "𝙣.",
+        "points": 9,
+        "firstWin": 17
+      },
+      {
+        "raw": "نوووور",
+        "points": 19,
+        "firstWin": 18
+      },
+      {
+        "raw": "*ـ",
+        "points": 5,
+        "firstWin": 19
+      },
+      {
+        "raw": "🧐🧐🧐",
+        "points": 2,
+        "firstWin": 20
+      },
+      {
+        "raw": "... /",
+        "points": 7,
+        "firstWin": 21
+      },
+      {
+        "raw": "vip..",
+        "points": 1,
+        "firstWin": 22
+      },
+      {
+        "raw": "ســوآح / اللذي محترم",
+        "points": 10,
+        "firstWin": 23
+      },
+      {
+        "raw": "- ㅤAbu waŤan ،",
+        "points": 1,
+        "firstWin": 25
+      },
+      {
+        "raw": "علامة / سؤال ؟",
+        "points": 43,
+        "firstWin": 26
+      },
+      {
+        "raw": "ركاد",
+        "points": 68,
+        "firstWin": 24
+      },
+      {
+        "raw": "~ | 𝑨𝒉𝒎𝒂𝒅",
+        "points": 4,
+        "firstWin": 27
+      },
+      {
+        "raw": ".𝗠",
+        "points": 75,
+        "firstWin": 28
+      },
+      {
+        "raw": "Nada",
+        "points": 10,
+        "firstWin": 29
+      },
+      {
+        "raw": "- Abu KenAn .",
+        "points": 1,
+        "firstWin": 30
+      },
+      {
+        "raw": ".ً",
+        "points": 14,
+        "firstWin": 31
+      }
+    ],
+    "CharacterQuizBot.v1.aiConfig": {
+      "provider": "ollama",
+      "baseUrl": "",
+      "model": "qwen2.5:7b-instruct",
+      "temperature": 0.7,
+      "maxTokens": 900,
+      "timeoutMs": 45000,
+      "generate": true,
+      "judge": false,
+      "judgeConfidence": 0.7,
+      "hint": true,
+      "adapt": true,
+      "explain": "generated",
+      "allowNetwork": true,
+      "rememberKey": true,
+      "generationCount": 20,
+      "generationLevel": "auto"
+    },
+    "CharacterQuizBot.v1.roundGoals": {
+      "فاكهة": 7,
+      "شخصيات": 7,
+      "تركيب صور": 7
+    }
+  }
+}
