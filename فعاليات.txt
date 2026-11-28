@@ -1152,6 +1152,25 @@ function getMsgText(node) {
 }
 function getUserName(row) { return row?.querySelector?.('.u-topic')?.textContent?.trim() || 'مجهول'; }
 
+function pickMessage(list) { return list[Math.floor(Math.random() * list.length)]; }
+function correctAnswerMessage(user, score, target) {
+  return pickMessage([
+    `🌟 إجابة صحيحة يا ${user}! برافو عليك 👏✨\n⭐ نقاطك: ${score}/${target}`,
+    `🎯 أصبت الهدف يا ${user}! إجابة ممتازة 💚\n🏅 ${score}/${target}`,
+    `💡 جواب سليم يا ${user}! سرعة وتركيز 🔥\n⭐ ${score}/${target}`,
+    `👏 كفو يا ${user}! إجابتك في محلها 🎉\n🏆 ${score}/${target}`,
+    `✅ صح لسانك يا ${user}! استمر بالتألق 🌟\n📊 ${score}/${target}`
+  ]);
+}
+function winnerMessage(user, score) {
+  return pickMessage([
+    `🏆👑 ألف ألف مبروك يا ${user}! تستاهل الفوز عن جدارة 🎉\n🌟 حسمت الجولة بـ ${score} نقطة!\n👏 تصفيق للبطل!`,
+    `🎊🎊 مبرووووك يا ${user}! أنت نجم الجولة ⭐\n🥇 حققت الفوز وجمعت ${score} نقطة بكل استحقاق!`,
+    `👑 بطلنا اليوم هو ${user}!\n🔥 أداء رائع وإجابات قوية، فوز مستحق بـ ${score} نقطة!\n🎉 مليون مبروك!`,
+    `🥳 تستاهل التتويج يا ${user}!\n🏆 أنهيت التحدي فائزاً بـ ${score} نقطة.\n🌹 مبارك الفوز وعقبال المزيد!`,
+    `🚀 يا سلام عليك يا ${user}! تفوقت على التحدي وخطفت اللقب 🏅\n🎉 مبروك الفوز بـ ${score} نقطة!`
+  ]);
+}
 function handleMessage(node) {
   if (!node?.classList) return;
   const row = node.closest?.('.mm') || node;
@@ -1182,11 +1201,11 @@ function handleMessage(node) {
     activeQ = null; wrongCount = 0; updateProgress();
     if (next >= targetScore) {
       finishRoundStats(user);
-      send(`🏆 كہٰفہٰوو يا ${user}!\nفزت بالجولة بـ ${next} نقطة 🎉🔥`).finally(() => {
+      send(winnerMessage(user, next)).finally(() => {
         answerLock = false; stopRound(null); showFinalResults();
       });
     } else {
-      send(`✅ كہٰفہٰوو يا ${user} 🎉🔥\n${next}/${targetScore}`).finally(() => {
+      send(correctAnswerMessage(user, next, targetScore)).finally(() => {
         answerLock = false;
         setTimeout(() => running && nextQuestion(), gapSec * 1000);
       });
