@@ -998,3 +998,420 @@ function renderPanel() {
 
 // ═══════════ فلترة + اكتشاف ═══════════
 async function refreshFromGitHub() {
+  setStatus('جاري تحميل مسابقات مجلد فعاليات...');
+  try {
+    const items = await ghListDir('فعاليات');
+    if (!Array.isArray(items)) throw new Error('استجابة مجلد فعاليات غير صالحة');
+    const files = new Set(items.filter(it => it.type === 'file' && /\.txt$/i.test(it.name)).map(it => it.name));
+    const expected = new Set(GAMES.map(g => g.dataFile));
+    const missing = [...expected].filter(name => !files.has(name));
+    if (missing.length) throw new Error('ملفات ناقصة: ' + missing.join('، '));
+    availableKeys = new Set(GAMES.map(g => g.key));
+    dynamicGames = [];
+    setStatus(`✅ جاهز — ${GAMES.length} مسابقة من مجلد فعاليات`);
+    refreshGameSelect();
+    updateProgress();
+  } catch (e) {
+    availableKeys = new Set();
+    setStatus('❌ فشل تحميل مجلد فعاليات: ' + e.message);
+    console.warn(`[${BRAND}] تعذر تحميل مسابقات فعاليات`, e);
+  }
+}
+
+// مؤقت خاص بتحدي العشر ثواني
+function armQuestionTimer() {
+  if (questionTimer) clearTimeout(questionTimer);
+  questionTimer = null;
+  const seconds = Number(currentGame?.timeLimitSeconds || 0);
+  if (!seconds || !running || !activeQ) return;
+  questionTimer = setTimeout(async () => {
+    if (!running || !activeQ || answerLock) return;
+    answerLock = true;
+    activeQ = null;
+    await send('⌛ انتهى الوقت! الإجابة الصحيحة: ' + (questions[qIdx - 1]?.correctDisplay || '—'));
+    answerLock = false;
+    if (running) setTimeout(() => nextQuestion(), 700);
+  }, seconds * 1000);
+}
+
+// ═══════════ منطق اللعبة ═══════════
+async function startRound() {
+  if (running) return;
+  if (isLocked()) { setStatus('🔒 مقفول'); return; }
+  running = true; qIdx = 0; questions = []; scores.clear(); wrongCount = 0; activeQ = null;
+  setStatus('جاري التحميل...'); updateProgress();
+  try {
+    const raw = await loadGameData(currentGame);
+    if (!raw.length) throw new Error('لا توجد أسئلة');
+    questions = shuffleArray(raw);
+    await send(`🎮 جولة [${currentGame.title}]`);
+    await sleep(1500);
+    activeQ = questions[qIdx++];
+    if (activeQ.isImage && activeQ.url) { await changeAvatar(activeQ.url); await sleep(1500); }
+    const intro = currentGame.intro || currentGame.prompt || currentGame.title;
+    const body  = activeQ.isImage ? '📸 (انظر لصورة البوت)' : activeQ.question;
+    await send(`${currentGame.emoji||'🎯'} ${intro}\n${body}`);
+    questionStartTime = Date.now();
+    armQuestionTimer();
+    setStatus(`السؤال ${qIdx}/${questions.length}`); updateProgress();
+  } catch (e) {
+    running = false; setStatus('❌ ' + e.message); updateProgress();
+    await send('🛑 خطأ: ' + e.message);
+  }
+}
+function stopRound(reason) {
+  if (!running) return;
+  running = false; activeQ = null; wrongCount = 0; questionStartTime = 0;
+  if (questionTimer) clearTimeout(questionTimer); questionTimer = null;
+  setStatus('متوقف'); updateProgress(); restoreAvatar();
+  if (reason) send(`🛑 ${reason}`).catch(() => {});
+}
+async function skipQuestion() {
+  if (!running || !activeQ) return setStatus('⚠️ لا يوجد سؤال نشط');
+  answerLock = true;
+  if (questionTimer) clearTimeout(questionTimer); questionTimer = null;
+  activeQ = null;
+  wrongCount = 0;
+  setStatus('⏭️ تجاوز');
+  try { await send('⏭️ تم تجاوز السؤال'); } catch {}
+  answerLock = false;
+  setTimeout(() => running && nextQuestion(), 500);
+}
+async function nextQuestion() {
+  if (!running) return;
+  if (qIdx >= questions.length) return stopRound('انتهت الأسئلة 🎉');
+  activeQ = questions[qIdx++]; wrongCount = 0;
+  if (activeQ.isImage && activeQ.url) { await changeAvatar(activeQ.url); await sleep(1500); }
+  const intro = currentGame.intro || currentGame.prompt || currentGame.title;
+  const body  = activeQ.isImage ? '📸 (انظر لصورة البوت)' : activeQ.question;
+  await send(`${currentGame.emoji||'🎯'} ${intro}\n${body}`);
+  questionStartTime = Date.now();
+  armQuestionTimer();
+  setStatus(`السؤال ${qIdx}/${questions.length}`); updateProgress();
+}
+async function showFinalResults() {
+  await sleep(1800);
+  if (scores.size) {
+    const s = [...scores.values()].sort((a,b) => b.score - a.score);
+    await send(`📊 نتائج الجولة:\n` + s.map((e,i) => `${i===0?'🥇':i===1?'🥈':i===2?'🥉':`${i+1}.`} ${e.raw} — ${e.score}`).join('\n'));
+  }
+  await sleep(1800);
+  const top = getTopList(5);
+  if (top.length) {
+    const medals = ['🥇','🥈','🥉','4️⃣','5️⃣'];
+    await send(`🏆 المتصدرون (أفضل 5):\n` + top.map((e,i) => `${medals[i]} ${e.name} — ${e.total} نقطة (${e.wins} فوز)`).join('\n'));
+  }
+}
+
+// ═══════════ صورة البوت ═══════════
+let originalAvatar = null;
+async function changeAvatar(url) {
+  try {
+    if (!originalAvatar) {
+      const img = document.querySelector('#mypic img') || document.querySelector('.profile-pic img');
+      if (img) originalAvatar = img.src;
+    }
+    const res  = await fetch(url);
+    const blob = await res.blob();
+    if (!blob.type.startsWith('image/')) throw new Error('ليس صورة');
+    const file = new File([blob], 'avatar.png', { type: blob.type });
+    const orig = HTMLInputElement.prototype.click;
+    HTMLInputElement.prototype.click = function() {
+      if (this.type === 'file') {
+        const dt = new DataTransfer(); dt.items.add(file);
+        this.files = dt.files;
+        this.dispatchEvent(new Event('change', { bubbles:true }));
+        HTMLInputElement.prototype.click = orig;
+        return;
+      }
+      orig.apply(this, arguments);
+    };
+    if (typeof TH_PIC_USER_ROOM === 'function') TH_PIC_USER_ROOM('user');
+    else if (typeof sendpic === 'function') sendpic();
+    setTimeout(() => { HTMLInputElement.prototype.click = orig; }, 3000);
+  } catch (e) { console.warn('فشل تغيير الصورة:', e); }
+}
+function restoreAvatar() {
+  if (!originalAvatar) return;
+  changeAvatar(originalAvatar).finally(() => setTimeout(() => originalAvatar = null, 2000));
+}
+
+// ═══════════ معالجة الرسائل ═══════════
+function getMsgText(node) {
+  let t = '';
+  const walk = n => {
+    for (const c of n.childNodes || []) {
+      if (c.nodeType === Node.TEXT_NODE) t += c.nodeValue || '';
+      else if (c.nodeType === Node.ELEMENT_NODE && !c.matches('button,img,script,style')) {
+        if (c.tagName === 'BR') t += ' '; else walk(c);
+      }
+    }
+  };
+  walk(node);
+  return t;
+}
+function getUserName(row) { return row?.querySelector?.('.u-topic')?.textContent?.trim() || 'مجهول'; }
+
+function handleMessage(node) {
+  if (!node?.classList) return;
+  const row = node.closest?.('.mm') || node;
+  const msg = node.querySelector?.('.u-msg') || (node.classList?.contains('u-msg') ? node : null);
+  if (!msg) return;
+  const text = getMsgText(msg).trim();
+  if (!text) return;
+  const user = getUserName(row);
+
+  if (text.startsWith('!') || (text.startsWith('**') && text.length >= 3)) {
+    handleCommand(text, user).catch(e => console.warn(e));
+    return;
+  }
+
+  if (!running || !activeQ || answerLock) return;
+  if (text.length > 500) return;
+  const norm = normAns(text);
+  if (!norm) return;
+
+  if (activeQ.accepted.includes(norm)) {
+    answerLock = true;
+    if (questionTimer) clearTimeout(questionTimer); questionTimer = null;
+    const elapsed = questionStartTime ? (Date.now() - questionStartTime) / 1000 : 0;
+    const next = (scores.get(user)?.score || 0) + 1;
+    if (!scores.has(user)) scores.set(user, { raw:user, score:0 });
+    scores.get(user).score = next;
+    recordPoint(user, elapsed);
+    activeQ = null; wrongCount = 0; updateProgress();
+    if (next >= targetScore) {
+      finishRoundStats(user);
+      send(`🏆 كہٰفہٰوو يا ${user}!\nفزت بالجولة بـ ${next} نقطة 🎉🔥`).finally(() => {
+        answerLock = false; stopRound(null); showFinalResults();
+      });
+    } else {
+      send(`✅ كہٰفہٰوو يا ${user} 🎉🔥\n${next}/${targetScore}`).finally(() => {
+        answerLock = false;
+        setTimeout(() => running && nextQuestion(), gapSec * 1000);
+      });
+    }
+  } else {
+    wrongCount++;
+    if (wrongCount >= 5) {
+      wrongCount = 0;
+      if (activeQ.isImage && activeQ.url) changeAvatar(activeQ.url);
+      const intro = currentGame.intro || currentGame.prompt || currentGame.title;
+      const body  = activeQ.isImage ? '📸 (انظر لصورة البوت)' : activeQ.question;
+      send(`🔁 إعادة السؤال (5 أخطاء):\n${intro}\n${body}`);
+    }
+  }
+}
+
+// ═══════════ 🔒 الأوامر ═══════════
+async function handleCommand(text, user) {
+  const t = text.trim();
+  const deny = () => send(`⛔ ${user} — هذا الأمر للمشرفين فقط 🔒`);
+
+  const mAdd = t.match(/^!!\s*(.+)$/);
+  if (mAdd) {
+    if (!isAdmin(user)) return deny();
+    const name = mAdd[1].trim();
+    if (!name) return send(`⚠️ اكتب: !!اسم المشرف`);
+    if (loadAdmins().has(normAns(name))) return send(`⚠️ ${name} مشرف مسبقاً`);
+    addAdmin(name);
+    return send(`✅ تمت إضافة ${name} كمشرف`);
+  }
+  const mRem = t.match(/^\*\*\s*(.+)$/);
+  if (mRem) {
+    if (!isAdmin(user)) return deny();
+    const name = mRem[1].trim();
+    if (!name) return send(`⚠️ اكتب: **اسم المشرف`);
+    if (!loadAdmins().has(normAns(name))) return send(`⚠️ ${name} ليس مشرفاً`);
+    removeAdmin(name);
+    return send(`✅ تمت إزالة ${name} من المشرفين`);
+  }
+
+  if (['!مساعدة','!أوامر','!اوامر','!help'].includes(t)) {
+    send(`📖 أوامر ${BRAND}:\n` +
+      `━━━ 📋 للجميع ━━━\n` +
+      `!م — عرض المسابقات الـ15 من مجلد فعاليات\n!قائمة — ملخص\n!قائمةN — صفحة N\n` +
+      `!نقاط — الجولة + كل المتصدرين (6/قائمة)\n!توب — أفضل 10\n!مشرفين — قائمة المشرفين\n` +
+      `━━━ 🔒 للمشرفين ━━━\n` +
+      `!بدء / !انهاء / !تجاوز\n` +
+      `!تلميح / !تلميح N\n!هدف N / !مدة N\n` +
+      `!<اسم اللعبة> — بدء مباشر\n!تصفير — حذف الإحصائيات\n` +
+      `!قفل — قفل البدء (كل المشرفين) 🔒\n!فتح — فتح البدء 🔓\n` +
+      `!!اسم — إضافة مشرف\n**اسم — إزالة مشرف\n\n` +
+      `📂 مصدر الأسئلة: GitHub / txt/فعاليات`);
+    return;
+  }
+
+  if (['!قفل','!lock'].includes(t)) {
+    if (!isAdmin(user)) return deny();
+    if (isLocked()) return send('⚠️ مقفول مسبقاً');
+    setLocked(true); renderPanel();
+    return send('🔒 تم قفل المسابقات');
+  }
+  if (['!فتح','!unlock'].includes(t)) {
+    if (!isAdmin(user)) return deny();
+    if (!isLocked()) return send('⚠️ مفتوح مسبقاً');
+    setLocked(false); renderPanel();
+    return send('🔓 تم فتح المسابقات');
+  }
+
+  if (['!مشرفين','!مشرفون'].includes(t)) {
+    const a = loadAdmins();
+    if (!a.size) return send(`👑 لا يوجد مشرفون بعد`);
+    return send(`👑 المشرفون (${a.size}):\n` + [...a].join('\n'));
+  }
+
+  const mHint = t.match(/^!تلميح(?:\s+(\d+))?$/);
+  if (mHint) {
+    if (!isAdmin(user)) return deny();
+    if (!running || !activeQ) return send('⚠️ لا يوجد سؤال نشط حالياً');
+    const n = mHint[1] ? Math.max(1, Math.min(+mHint[1], 10)) : 2;
+    const ans = activeQ.correctDisplay || activeQ.answer || '';
+    return send(`💡 تلميح (آخر ${n} مخفية):\n${makeHint(ans, n)}`);
+  }
+
+  if (/^!قائم[ةه]\s*$/.test(t)) return showSummary();
+  const mP = t.match(/^!قائم[ةه]\s*(\d+)$/);
+  if (mP) return sendGamesPage(+mP[1]);
+
+  if (['!مسابقات','!م'].includes(t)) return showAllPages();
+
+  if (['!نقاط','!نتائج'].includes(t)) {
+    const perPage = 6;
+    if (scores.size) {
+      const s = [...scores.values()].sort((a,b) => b.score - a.score);
+      const pages = Math.ceil(s.length / perPage);
+      for (let p = 0; p < pages; p++) {
+        const slice = s.slice(p * perPage, (p+1) * perPage);
+        const lines = slice.map((e, i) => {
+          const idx = p * perPage + i;
+          const medal = idx===0 ? '🥇' : idx===1 ? '🥈' : idx===2 ? '🥉' : `${idx+1}.`;
+          return `${medal} ${e.raw} — ${e.score}`;
+        });
+        const header = p === 0 ? `📊 نقاط الجولة (${currentGame.title}) — ${s.length} مشارك:` : `📄 صفحة ${p+1}/${pages}:`;
+        await send(header + '\n' + lines.join('\n'));
+        if (p < pages - 1) await sleep(900);
+      }
+    } else {
+      await send('📊 لا توجد نقاط في الجولة الحالية');
+    }
+    const top = getTopList(9999);
+    if (top.length) {
+      const pages = Math.ceil(top.length / perPage);
+      for (let p = 0; p < pages; p++) {
+        const slice = top.slice(p * perPage, (p+1) * perPage);
+        const lines = slice.map((e, i) => {
+          const idx = p * perPage + i;
+          const medal = idx===0 ? '🥇' : idx===1 ? '🥈' : idx===2 ? '🥉' : `${idx+1}.`;
+          return `${medal} ${e.name} — ${e.total} نقطة (${e.wins} فوز)`;
+        });
+        const header = p === 0 ? `🏆 المتصدرون المحفوظون — ${top.length} مشارك:` : `📄 صفحة ${p+1}/${pages}:`;
+        await send(header + '\n' + lines.join('\n'));
+        if (p < pages - 1) await sleep(900);
+      }
+    }
+    return;
+  }
+
+  if (['!توب','!متصدرين','!top','!الأفضل'].includes(t)) {
+    const top = getTopList(10);
+    if (!top.length) return send('⚠️ لا توجد إحصائيات محفوظة بعد');
+    const medals = ['🥇','🥈','🥉'];
+    return send(`🏆 المتصدرون (أفضل ${top.length}):\n` + top.map((e,i) => {
+      const medal = medals[i] || `${i+1}.`;
+      return `${medal} ${e.name} — ${e.total} نقطة (${e.wins} فوز)`;
+    }).join('\n'));
+  }
+
+  if (['!تصفير','!حذف','!reset'].includes(t)) {
+    if (!isAdmin(user)) return deny();
+    resetStats();
+    return send('🗑️ تم حذف جميع الإحصائيات المحفوظة');
+  }
+
+  if (['!بدء','!ابدأ'].includes(t)) {
+    if (!isAdmin(user)) return deny();
+    if (running) return send('⚠️ هناك جولة جارية');
+    if (isLocked()) return send('🔒 المسابقات مقفولة');
+    startRound();
+    return;
+  }
+  if (['!انهاء','!إنهاء','!انهي'].includes(t)) {
+    if (!isAdmin(user)) return deny();
+    stopRound('تم الإنهاء');
+    return;
+  }
+  if (['!تجاوز','!تجاوزي'].includes(t) && running) {
+    if (!isAdmin(user)) return deny();
+    skipQuestion();
+    return;
+  }
+
+  const mT = t.match(/^!هدف\s+(\d+)/);
+  if (mT) {
+    if (!isAdmin(user)) return deny();
+    const v = +mT[1];
+    if (v>=1 && v<=50) { targetScore = v; updateProgress(); send(`🎯 الهدف: ${v}`); }
+    return;
+  }
+  const mG = t.match(/^!مدة\s+(\d+)/);
+  if (mG) {
+    if (!isAdmin(user)) return deny();
+    const v = +mG[1];
+    if (v>=1 && v<=30) { gapSec = v; send(`⏱️ المدة: ${v}ث`); }
+    return;
+  }
+
+  if (t.length > 1) {
+    const name = t.slice(1).trim();
+    const game = getVisibleGames().find(g => g.key === name || g.title === name);
+    if (game && game.displayOnly) {
+      return send(`ℹ️ «${game.title}» مضافة إلى قائمة !م كاسم فقط، ولم يتم ربط أسئلتها بعد`);
+    }
+    if (game && !running) {
+      if (!isAdmin(user)) return deny();
+      if (isLocked()) return send('🔒 المسابقات مقفولة');
+      currentGame = game;
+      const sel = panel?.querySelector('#cq-game');
+      if (sel) sel.value = game.key;
+      startRound();
+    }
+  }
+}
+
+// ═══════════ Observer ═══════════
+let observer = null;
+function initObserver() {
+  if (observer) observer.disconnect();
+  observer = new MutationObserver(changes => {
+    for (const c of changes)
+      for (const n of c.addedNodes)
+        if (n.nodeType === Node.ELEMENT_NODE) handleMessage(n);
+  });
+  observer.observe(chat, { childList:true, subtree:true });
+}
+function dispose() {
+  running = false;
+  observer?.disconnect(); observer = null;
+  panel?.remove(); panel = null;
+  restoreAvatar();
+  console.log(`[${BRAND}] تم الإيقاف`);
+}
+
+// ═══════════ التشغيل ═══════════
+renderPanel();
+initObserver();
+refreshFromGitHub();
+console.log(`%c🎮 ${BRAND} v${VERSION} 🔒 جاهز!`, 'color:#d4af37;font-weight:bold;font-size:14px;');
+console.log('اكتب !م لعرض المسابقات، و !مساعدة لعرض الأوامر');
+window.QuizBot = {
+  dispose, VERSION, BRAND,
+  stats:   { get: getTopList, reset: resetStats },
+  admins:  { list: () => [...loadAdmins()], add: addAdmin, remove: removeAdmin },
+  theme:   { get: loadTheme, reset: resetTheme, export: exportTheme, import: importTheme },
+  host:    { get: getHostName, set: setHostName, clear: clearHostName, isAdmin: isHostAdmin },
+  lock:    { isLocked, set: setLocked },
+  custom:  { list: loadCustomGames, add: addCustomGame, remove: removeCustomGame }
+};
+
+})();
