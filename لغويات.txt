@@ -7,9 +7,10 @@
 // ║  • يحتوي كل ملف على 200 سؤال مختلف                  ║
 // ╚══════════════════════════════════════════════════════════╝
 
-const VERSION = '1.0.0';
+const VERSION = '1.0.1';
 const BRAND = 'لغويات';
 const PAGE_SIZE = 15;
+const QUESTIONS_FOLDER = 'لغويات';
 
 const CONFIG = {
   chatSelector: null,
@@ -623,7 +624,7 @@ function generateLocal(mode) {
 // ═══════════ تحميل أسئلة لغويات من مجلد GitHub فقط ═══════════
 async function loadEventQuestions(game) {
   if (!game?.dataFile) throw new Error('ملف أسئلة الفعالية غير محدد');
-  const src = await ghFetchText(`لغويات/${game.dataFile}`);
+  const src = await ghFetchText(`${QUESTIONS_FOLDER}/${game.dataFile}`);
   const parsed = parseTextQuestions(src, `event:${game.key}`);
   if (parsed.length !== 200) throw new Error(`ملف ${game.title} يحتوي ${parsed.length} سؤالاً بدلاً من 200`);
   return parsed;
@@ -986,7 +987,7 @@ function renderPanel() {
 async function refreshFromGitHub() {
   setStatus('جاري تحميل مسابقات مجلد لغويات...');
   try {
-    const items = await ghListDir('لغويات');
+    const items = await ghListDir(QUESTIONS_FOLDER);
     if (!Array.isArray(items)) throw new Error('استجابة مجلد لغويات غير صالحة');
     const files = new Set(items.filter(it => it.type === 'file' && /\.txt$/i.test(it.name)).map(it => it.name));
     const expected = new Set(GAMES.map(g => g.dataFile));
