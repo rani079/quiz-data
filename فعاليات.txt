@@ -355,66 +355,62 @@ function parseTextQuestions(src, key) {
     const clean = line.trim();
     if (!clean || clean.startsWith('#')) continue;
 
-    // يدعم صيغة الأسئلة العادية، وصيغة الملف المقتبسة: "السؤال" : "الإجابة"
-    const quotedPair = clean.match(/^[\"“](.*?)[\"”]\s*:\s*[\"“](.*?)[\"”],?\s*$/);
+    // صيغة ملفات الفعاليات: "نص السؤال" : "الإجابة"
+    // نعالج السطر المقتبس كاملاً أولاً حتى لا تُفسَّر النقطتان داخل السؤال كفاصل للإجابة.
+    const quotedPair = clean.match(/^("(?:\\.|[^"\\])*")\s*:\s*("(?:\\.|[^"\\])*")\s*,?\s*$/);
     if (quotedPair) {
-      const q = quotedPair[1].trim();
-      const ans = quotedPair[2].split('|').map(a => a.trim()).filter(Boolean);
+      let q = '', answerText = '';
+      try { q = JSON.parse(quotedPair[1]); answerText = JSON.parse(quotedPair[2]); }
+      catch { q = quotedPair[1].slice(1, -1); answerText = quotedPair[2].slice(1, -1); }
+      const ans = String(answerText).split('|').map(a => a.trim()).filter(Boolean);
+      q = String(q).trim();
       if (!q || !ans.length) continue;
-      items.push({ key:`${key}:${i}`, question:q, answers:ans,
-        accepted:[...new Set(ans.flatMap(ansForms))], correctDisplay:ans[0] });
+      items.push({ key: key + ':' + i, question: q, answers: ans,
+        accepted: [...new Set(ans.flatMap(ansForms))], correctDisplay: ans[0] });
       continue;
     }
 
+    // دعم الاقتباس العربي المنحني، ومنع سقوط السطر المقتبس إلى محلل النقطتين.
+    const curlyPair = clean.match(/^[“](.*)[”]\s*:\s*[“](.*)[”],?\s*$/);
+    if (curlyPair) {
+      const q = curlyPair[1].trim();
+      const ans = curlyPair[2].split('|').map(a => a.trim()).filter(Boolean);
+      if (q && ans.length) items.push({ key: key + ':' + i, question: q, answers: ans,
+        accepted: [...new Set(ans.flatMap(ansForms))], correctDisplay: ans[0] });
+      continue;
+    }
+    if (/^["“”]/.test(clean)) continue;
+
+    // دعم الصيغ القديمة غير المقتبسة.
     const colon = clean.indexOf(':');
     if (colon >= 1) {
-      const q = clean.slice(0, colon).trim().replace(/^[\"“]|[\"”]$/g, '');
-      const ans = clean.slice(colon + 1).split('|').map(a => a.trim().replace(/^[\"“]|[\"”],?$/g, '')).filter(Boolean);
+      const q = clean.slice(0, colon).trim();
+      const ans = clean.slice(colon + 1).split('|').map(a => a.trim()).filter(Boolean);
       if (!q || !ans.length) continue;
-      items.push({ key:`${key}:${i}`, question:q, answers:ans,
-        accepted:[...new Set(ans.flatMap(ansForms))], correctDisplay:ans[0] });
+      items.push({ key: key + ':' + i, question: q, answers: ans,
+        accepted: [...new Set(ans.flatMap(ansForms))], correctDisplay: ans[0] });
       continue;
     }
 
     const parts = clean.split('|').map(s => s.trim()).filter(Boolean);
     if (parts.length < 2) continue;
-
     const first = parts[0];
-    const endsWithQuestion = /[؟?]\s*$/.test(first);
-
-    if (endsWithQuestion) {
-      const correct = parts[1];
-      const wrong = parts.slice(2);
+    if (/[؟?]\s*$/.test(first)) {
+      const correct = parts[1], wrong = parts.slice(2);
       if (!first || !correct) continue;
-
-      const opts = [correct, ...wrong];
-      const shuffled = shuffleArray(opts);
+      const shuffled = shuffleArray([correct, ...wrong]);
       const correctPosition = shuffled.findIndex(o => normAns(o) === normAns(correct));
       const numEmojis = ['1️⃣','2️⃣','3️⃣','4️⃣','5️⃣','6️⃣'];
-
-      const displayQ = `${first}\n\n` + shuffled.map((o, idx) =>
-        `${numEmojis[idx] || `${idx+1}.`} ${o}`
-      ).join('\n');
-
-      items.push({
-        key: `${key}:${i}`,
-        question: displayQ,
-        answers: [correct],
+      const displayQ = first + '\n\n' + shuffled.map((o, idx) => (numEmojis[idx] || (idx + 1) + '.') + ' ' + o).join('\n');
+      items.push({ key: key + ':' + i, question: displayQ, answers: [correct],
         accepted: [...new Set([...ansForms(correct), String(correctPosition + 1)])],
-        correctDisplay: correct,
-        isMCQ: true, options: shuffled, correctPosition
-      });
+        correctDisplay: correct, isMCQ: true, options: shuffled, correctPosition });
     } else {
-      const word = parts[0];
-      const clues = parts.slice(1);
+      const word = parts[0], clues = parts.slice(1);
       if (!word || !clues.length) continue;
-      const displayQ = `خمن الكلمة من الأوصاف:\n` +
-        clues.map((c, idx) => `${idx+1}. ${c}`).join('\n');
-      items.push({
-        key: `${key}:${i}`, question: displayQ,
-        answers: [word], accepted: ansForms(word),
-        correctDisplay: word, isClues: true
-      });
+      const displayQ = 'خمن الكلمة من الأوصاف:\n' + clues.map((clue, idx) => (idx + 1) + '. ' + clue).join('\n');
+      items.push({ key: key + ':' + i, question: displayQ, answers: [word],
+        accepted: ansForms(word), correctDisplay: word, isClues: true });
     }
   }
   return items;
