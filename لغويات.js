@@ -1285,7 +1285,7 @@ async function handleCommand(text, user) {
 
   if(t==='!يومي'){const r=claimDailyReward(user);if(!r.ok)return send(`📅 ${r.message}`);return send(`🎁 مكافأتك اليومية: +${r.reward} عملة و+15 خبرة\n🔥 سلسلة الدخول: ${r.streak} يوم\n💰 رصيدك: ${r.coins}`);}
   if(t==='!ملفي'||t==='!مستواي'){const p=getProfile(user);return send(`👤 ملف ${user}\n${p.level.icon} المستوى: ${p.level.name}\n⭐ الخبرة: ${p.xp}${p.level.next?` (التقدم ${p.level.progress}% نحو ${p.level.next.name})`:' — أعلى مستوى'}\n🪙 العملات: ${p.coins}\n🎯 النقاط: ${p.total} • 🏆 الانتصارات: ${p.wins}\n🎒 التلميحات: ${p.items.hints||0} • المضاعفات: ${p.items.boosts||0}`);}
-  if(t==='!إنجازاتي'||t==='!اوسمتي'){const p=getProfile(user),b=getBadges(p);return send(`🏅 إنجازات ${user}:\n${b.length?b.join('\\n'):'لم تحصل على أوسمة بعد. شارك في المسابقات!'}`);}
+  if(t==='!إنجازاتي'||t==='!اوسمتي'){const p=getProfile(user),b=getBadges(p);return send(`🏅 إنجازات ${user}:\n${b.length?b.join('\n'):'لم تحصل على أوسمة بعد. شارك في المسابقات!'}`);}
   if(t==='!المتجر'){const p=getProfile(user);return send(`🛒 متجر النقاط — رصيدك ${p.coins} عملة\n💡 !شراء تلميح — 10 عملات\n⚡ !شراء مضاعف — 25 عملة\nاستخدم !تلميحي للتلميح، والمضاعف يضاعف نقاط إجابتك الصحيحة التالية.`);}
   if(t==='!شراء تلميح'||t==='!شراء مضاعف'){const type=t.endsWith('تلميح')?'hints':'boosts',r=buyItem(user,type);return send(r.ok?`✅ تم الشراء! المتبقي ${r.coins} عملة • الكمية: ${r.count}`:`⚠️ ${r.message}`);}
   if(t==='!تلميحي'){if(!running||!activeQ)return send('⚠️ لا توجد مسابقة أو سؤال نشط.');if(!useOwnedHint(user))return send('🎒 لا تملك تلميحاً. استخدم !المتجر لشراء واحد.');return send(`💡 تلميحك: ${makeHint(activeQ.correctDisplay||activeQ.answer||'',2)}`);}
