@@ -2,8 +2,8 @@
 'use strict';
 
 // ╔══════════════════════════════════════════════════════════╗
-// ║  🎉 فعاليات الشات v2.1.0 🔒                              ║
-// ║  • يعرض ويشغّل 15 مسابقة من مجلد txt/فعاليات فقط ║
+// ║  🔤 لغويات الشات v1.0.1 🔒                               ║
+// ║  • يعرض ويشغّل 5 مسابقات من مجلد لغويات فقط       ║
 // ║  • يحتوي كل ملف على 200 سؤال مختلف                  ║
 // ╚══════════════════════════════════════════════════════════╝
 
@@ -14,7 +14,7 @@ const PAGE_SIZE = 15;
 const CONFIG = {
   chatSelector: null,
   inputSelector: null,
-  github: { owner: 'rani079', repo: 'quiz-data', branch: 'main', basePath: 'txt' }
+  github: { owner: 'rani079', repo: 'quiz-data', branch: 'main', basePath: '' }
 };
 
 const GAMES = [
@@ -345,7 +345,7 @@ function parseTextQuestions(src, key) {
     const clean = line.trim();
     if (!clean || clean.startsWith('#')) continue;
 
-    // صيغة ملفات الفعاليات: "نص السؤال" : "الإجابة"
+    // صيغة ملفات لغويات: "نص السؤال" : "الإجابة"
     // نعالج السطر المقتبس كاملاً أولاً حتى لا تُفسَّر النقطتان داخل السؤال كفاصل للإجابة.
     const quotedPair = clean.match(/^("(?:\\.|[^"\\])*")\s*:\s*("(?:\\.|[^"\\])*")\s*,?\s*$/);
     if (quotedPair) {
@@ -620,7 +620,7 @@ function generateLocal(mode) {
   return items;
 }
 
-// ═══════════ تحميل أسئلة الفعاليات من مجلد GitHub فقط ═══════════
+// ═══════════ تحميل أسئلة لغويات من مجلد GitHub فقط ═══════════
 async function loadEventQuestions(game) {
   if (!game?.dataFile) throw new Error('ملف أسئلة الفعالية غير محدد');
   const src = await ghFetchText(`لغويات/${game.dataFile}`);
@@ -986,7 +986,7 @@ function renderPanel() {
 async function refreshFromGitHub() {
   setStatus('جاري تحميل مسابقات مجلد لغويات...');
   try {
-    const items = await ghListDir('فعاليات');
+    const items = await ghListDir('لغويات');
     if (!Array.isArray(items)) throw new Error('استجابة مجلد لغويات غير صالحة');
     const files = new Set(items.filter(it => it.type === 'file' && /\.txt$/i.test(it.name)).map(it => it.name));
     const expected = new Set(GAMES.map(g => g.dataFile));
@@ -1000,7 +1000,7 @@ async function refreshFromGitHub() {
   } catch (e) {
     availableKeys = new Set();
     setStatus('❌ فشل تحميل مجلد لغويات: ' + e.message);
-    console.warn(`[${BRAND}] تعذر تحميل مسابقات فعاليات`, e);
+    console.warn(`[${BRAND}] تعذر تحميل مسابقات لغويات`, e);
   }
 }
 
@@ -1224,7 +1224,7 @@ async function handleCommand(text, user) {
       `!<اسم اللعبة> — بدء مباشر\n!تصفير — حذف الإحصائيات\n` +
       `!قفل — قفل البدء (كل المشرفين) 🔒\n!فتح — فتح البدء 🔓\n` +
       `!!اسم — إضافة مشرف\n**اسم — إزالة مشرف\n\n` +
-      `📂 مصدر الأسئلة: GitHub / txt/فعاليات`);
+      `📂 مصدر الأسئلة: GitHub / لغويات`);
     return;
   }
 
