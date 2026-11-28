@@ -1191,11 +1191,20 @@ function handleMessage(node) {
   } else {
     wrongCount++;
     if (wrongCount >= 5) {
+      // بعد خمس إجابات خاطئة: اعرض الحل ثم انتقل تلقائياً للسؤال التالي.
+      answerLock = true;
+      if (questionTimer) clearTimeout(questionTimer);
+      questionTimer = null;
+      const correct = activeQ.correctDisplay || activeQ.answer || 'غير متوفرة';
+      activeQ = null;
       wrongCount = 0;
-      if (activeQ.isImage && activeQ.url) changeAvatar(activeQ.url);
-      const intro = currentGame.intro || currentGame.prompt || currentGame.title;
-      const body  = activeQ.isImage ? '📸 (انظر لصورة البوت)' : activeQ.question;
-      send(`🔁 إعادة السؤال (5 أخطاء):\n${intro}\n${body}`);
+      send(`❌ انتهت المحاولات الخمس!\n✅ الإجابة الصحيحة: ${correct}\n⏭️ الانتقال إلى السؤال التالي...`)
+        .finally(() => {
+          setTimeout(async () => {
+            answerLock = false;
+            if (running) await nextQuestion();
+          }, 1200);
+        });
     }
   }
 }
