@@ -2,12 +2,12 @@
 'use strict';
 
 // ╔══════════════════════════════════════════════════════════╗
-// ║  🔤 لغويات الشات v1.1.0 🔒                               ║
+// ║  🔤 لغويات الشات v1.2.0 🔒                               ║
 // ║  • يعرض ويشغّل 15 مسابقة من مجلد لغويات فقط       ║
 // ║  • يحتوي كل ملف على 200 سؤال مختلف                  ║
 // ╚══════════════════════════════════════════════════════════╝
 
-const VERSION = '1.1.0';
+const VERSION = '1.2.0';
 const BRAND = 'لغويات';
 const PAGE_SIZE = 15;
 const QUESTIONS_FOLDER = 'لغويات';
@@ -157,11 +157,11 @@ function countDots(word) {
 const STATS_KEY = 'mqb_stats_v4';
 function loadStats() { try { return JSON.parse(localStorage.getItem(STATS_KEY)) || {}; } catch { return {}; } }
 function saveStats(s) { try { localStorage.setItem(STATS_KEY, JSON.stringify(s)); } catch {} }
-function recordPoint(user, elapsedSec) {
-  const s = loadStats();
-  if (!s[user]) s[user] = { total:0, wins:0, games:0, bestTime:null };
-  s[user].total = (s[user].total || 0) + 1;
-  if (elapsedSec > 0 && (s[user].bestTime == null || elapsedSec < s[user].bestTime)) s[user].bestTime = elapsedSec;
+function recordPoint(user, elapsedSec, points = 1) {
+  const s=loadStats();
+  if(!s[user])s[user]={total:0,wins:0,games:0,bestTime:null,xp:0,coins:0,dailyStreak:0,lastDaily:'',items:{hints:0,boosts:0}};
+  const p=s[user];p.total=(p.total||0)+points;p.xp=(p.xp||0)+points*10;p.coins=(p.coins||0)+points*2;p.items=p.items||{hints:0,boosts:0};
+  if(elapsedSec>0&&(p.bestTime==null||elapsedSec<p.bestTime))p.bestTime=elapsedSec;
   saveStats(s);
 }
 function finishRoundStats(winner) {
@@ -183,6 +183,18 @@ function getTopList(n = 10) {
     .slice(0, n);
 }
 function resetStats() { try { localStorage.removeItem(STATS_KEY); } catch {} }
+function playerLevel(xp=0){
+ const levels=[{name:'مبتدئ',min:0,icon:'🌱'},{name:'متدرّب',min:100,icon:'🥉'},{name:'متمكن',min:300,icon:'🥈'},{name:'خبير',min:700,icon:'🥇'},{name:'عبقري',min:1400,icon:'🧠'},{name:'أسطورة اللغة',min:2500,icon:'👑'}];
+ let current=levels[0],next=null;for(let i=0;i<levels.length;i++)if(xp>=levels[i].min){current=levels[i];next=levels[i+1]||null;}
+ return {...current,next,progress:next?Math.min(100,Math.round((xp-current.min)/(next.min-current.min)*100)):100};
+}
+function getProfile(name){const p=loadStats()[name]||{};return {total:p.total||0,wins:p.wins||0,games:p.games||0,bestTime:p.bestTime,xp:p.xp||0,coins:p.coins||0,dailyStreak:p.dailyStreak||0,items:p.items||{hints:0,boosts:0},level:playerLevel(p.xp||0)};}
+function getBadges(p){const b=[];if(p.total>=1)b.push('🎯 أول إجابة');if(p.total>=50)b.push('🔥 جامع 50 نقطة');if(p.total>=200)b.push('💎 جامع 200 نقطة');if(p.wins>=1)b.push('🏆 أول فوز');if(p.wins>=10)b.push('👑 بطل 10 جولات');if(p.dailyStreak>=7)b.push('📅 مواظب أسبوع');if(p.level.name==='أسطورة اللغة')b.push('🌟 أسطورة اللغة');return b;}
+function localDayKey(d=new Date()){return [d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-');}
+function claimDailyReward(name){const s=loadStats(),p=s[name]||(s[name]={total:0,wins:0,games:0,bestTime:null,xp:0,coins:0,dailyStreak:0,lastDaily:'',items:{hints:0,boosts:0}});const today=localDayKey();if(p.lastDaily===today)return {ok:false,message:'استلمت مكافأتك اليومية بالفعل اليوم.'};const yesterday=localDayKey(new Date(Date.now()-86400000));p.dailyStreak=p.lastDaily===yesterday?(p.dailyStreak||0)+1:1;const reward=5+Math.min(p.dailyStreak-1,6)*2;p.coins=(p.coins||0)+reward;p.xp=(p.xp||0)+15;p.lastDaily=today;saveStats(s);return {ok:true,reward,streak:p.dailyStreak,coins:p.coins};}
+function buyItem(name,type){const s=loadStats(),p=s[name];if(!p)return {ok:false,message:'شارك في مسابقة أولاً حتى يُنشأ ملفك.'};p.items=p.items||{hints:0,boosts:0};const price=type==='hints'?10:25;if((p.coins||0)<price)return {ok:false,message:`رصيدك غير كافٍ. تحتاج ${price} عملة.`};p.coins-=price;p.items[type]=(p.items[type]||0)+1;saveStats(s);return {ok:true,coins:p.coins,count:p.items[type]};}
+function useOwnedHint(name){const s=loadStats(),p=s[name];if(!p||!p.items||!p.items.hints)return false;p.items.hints--;saveStats(s);return true;}
+function consumeBoost(name){const s=loadStats(),p=s[name];if(!p||!p.items||!p.items.boosts)return false;p.items.boosts--;saveStats(s);return true;}
 
 // ═══════════ مشرفون ═══════════
 const ADMINS_KEY = 'mqb_admins_v1';
@@ -703,6 +715,13 @@ let running = false, activeQ = null, currentGame = GAMES[0];
 let targetScore = 5, gapSec = 3, questions = [], qIdx = 0;
 let scores = new Map(), wrongCount = 0, answerLock = false;
 let availableKeys = null, dynamicGames = [], questionStartTime = 0, questionTimer = null;
+let teamMode=false;const TEAM_KEY='mqb_teams_v1';
+function loadTeams(){try{return JSON.parse(localStorage.getItem(TEAM_KEY))||{};}catch{return {};}}
+function saveTeams(v){try{localStorage.setItem(TEAM_KEY,JSON.stringify(v));}catch{}}
+function getTeam(name){return loadTeams()[normAns(name)]||'';}
+function joinTeam(name,team){const t=loadTeams();t[normAns(name)]=team;saveTeams(t);}
+let teamScores={red:0,blue:0};function resetTeamScores(){teamScores={red:0,blue:0};}
+function teamLabel(k){return k==='red'?'🔴 الأحمر':'🔵 الأزرق';}
 
 const getAllGames = () => GAMES;
 const getVisibleGames = () => GAMES;
@@ -1035,7 +1054,7 @@ function armQuestionTimer() {
 async function startRound() {
   if (running) return;
   if (isLocked()) { setStatus('🔒 مقفول'); return; }
-  running = true; qIdx = 0; questions = []; scores.clear(); wrongCount = 0; activeQ = null;
+  running = true; qIdx = 0; questions = []; scores.clear(); wrongCount = 0; activeQ = null; resetTeamScores();
   setStatus('جاري التحميل...'); updateProgress();
   try {
     const raw = await loadGameData(currentGame);
@@ -1092,6 +1111,7 @@ async function showFinalResults() {
     const s = [...scores.values()].sort((a,b) => b.score - a.score);
     await send(`📊 نتائج الجولة:\n` + s.map((e,i) => `${i===0?'🥇':i===1?'🥈':i===2?'🥉':`${i+1}.`} ${e.raw} — ${e.score}`).join('\n'));
   }
+  if(teamMode){await sleep(900);await send(`⚔️ نتيجة حرب الفرق:\n${teamLabel('red')}: ${teamScores.red} نقطة\n${teamLabel('blue')}: ${teamScores.blue} نقطة\n${teamScores.red===teamScores.blue?'🤝 تعادل!':teamScores.red>teamScores.blue?'🏆 فوز الفريق الأحمر!':'🏆 فوز الفريق الأزرق!'}`);}
   await sleep(1800);
   const top = getTopList(5);
   if (top.length) {
@@ -1172,10 +1192,11 @@ function handleMessage(node) {
     answerLock = true;
     if (questionTimer) clearTimeout(questionTimer); questionTimer = null;
     const elapsed = questionStartTime ? (Date.now() - questionStartTime) / 1000 : 0;
-    const next = (scores.get(user)?.score || 0) + 1;
-    if (!scores.has(user)) scores.set(user, { raw:user, score:0 });
-    scores.get(user).score = next;
-    recordPoint(user, elapsed);
+    const boosted=consumeBoost(user),earned=boosted?2:(elapsed>0&&elapsed<=5?2:1);
+    const next=(scores.get(user)?.score||0)+earned;
+    if(!scores.has(user))scores.set(user,{raw:user,score:0});
+    scores.get(user).score=next;recordPoint(user,elapsed,earned);
+    if(teamMode){const team=getTeam(user);if(team==='red'||team==='blue')teamScores[team]+=earned;}
     activeQ = null; wrongCount = 0; updateProgress();
     if (next >= targetScore) {
       finishRoundStats(user);
@@ -1183,7 +1204,7 @@ function handleMessage(node) {
         answerLock = false; stopRound(null); showFinalResults();
       });
     } else {
-      send(`✅ كہٰفہٰوو يا ${user} 🎉🔥\n${next}/${targetScore}`).finally(() => {
+      send(`✅ كہٰفہٰوو يا ${user} 🎉🔥\n+${earned} نقطة ${boosted?'(مضاعفة) ⚡':(elapsed<=5?'(سرعة) 🚀':'')}\n${next}/${targetScore}`).finally(() => {
         answerLock = false;
         setTimeout(() => running && nextQuestion(), gapSec * 1000);
       });
@@ -1242,6 +1263,7 @@ async function handleCommand(text, user) {
       `!بدء / !انهاء / !تجاوز\n` +
       `!تلميح / !تلميح N\n!هدف N / !مدة N\n` +
       `!<اسم اللعبة> — بدء مباشر\n!تصفير — حذف الإحصائيات\n` +
+      `!يومي • !ملفي • !إنجازاتي • !المتجر\n!شراء تلميح/مضاعف • !تلميحي\n!فرق تشغيل/إيقاف • !فريق أحمر/أزرق • !فرق\n` +
       `!قفل — قفل البدء (كل المشرفين) 🔒\n!فتح — فتح البدء 🔓\n` +
       `!!اسم — إضافة مشرف\n**اسم — إزالة مشرف\n\n` +
       `📂 مصدر الأسئلة: GitHub / لغويات`);
@@ -1261,6 +1283,16 @@ async function handleCommand(text, user) {
     return send('🔓 تم فتح المسابقات');
   }
 
+  if(t==='!يومي'){const r=claimDailyReward(user);if(!r.ok)return send(`📅 ${r.message}`);return send(`🎁 مكافأتك اليومية: +${r.reward} عملة و+15 خبرة\n🔥 سلسلة الدخول: ${r.streak} يوم\n💰 رصيدك: ${r.coins}`);}
+  if(t==='!ملفي'||t==='!مستواي'){const p=getProfile(user);return send(`👤 ملف ${user}\n${p.level.icon} المستوى: ${p.level.name}\n⭐ الخبرة: ${p.xp}${p.level.next?` (التقدم ${p.level.progress}% نحو ${p.level.next.name})`:' — أعلى مستوى'}\n🪙 العملات: ${p.coins}\n🎯 النقاط: ${p.total} • 🏆 الانتصارات: ${p.wins}\n🎒 التلميحات: ${p.items.hints||0} • المضاعفات: ${p.items.boosts||0}`);}
+  if(t==='!إنجازاتي'||t==='!اوسمتي'){const p=getProfile(user),b=getBadges(p);return send(`🏅 إنجازات ${user}:\n${b.length?b.join('\\n'):'لم تحصل على أوسمة بعد. شارك في المسابقات!'}`);}
+  if(t==='!المتجر'){const p=getProfile(user);return send(`🛒 متجر النقاط — رصيدك ${p.coins} عملة\n💡 !شراء تلميح — 10 عملات\n⚡ !شراء مضاعف — 25 عملة\nاستخدم !تلميحي للتلميح، والمضاعف يضاعف نقاط إجابتك الصحيحة التالية.`);}
+  if(t==='!شراء تلميح'||t==='!شراء مضاعف'){const type=t.endsWith('تلميح')?'hints':'boosts',r=buyItem(user,type);return send(r.ok?`✅ تم الشراء! المتبقي ${r.coins} عملة • الكمية: ${r.count}`:`⚠️ ${r.message}`);}
+  if(t==='!تلميحي'){if(!running||!activeQ)return send('⚠️ لا توجد مسابقة أو سؤال نشط.');if(!useOwnedHint(user))return send('🎒 لا تملك تلميحاً. استخدم !المتجر لشراء واحد.');return send(`💡 تلميحك: ${makeHint(activeQ.correctDisplay||activeQ.answer||'',2)}`);}
+  if(t==='!فرق')return send(`⚔️ حالة الفرق: ${teamMode?'مفعّلة':'متوقفة'}\n🔴 الأحمر: ${teamScores.red} • 🔵 الأزرق: ${teamScores.blue}\nللانضمام: !فريق أحمر أو !فريق أزرق`);
+  if(t==='!فرق تشغيل'||t==='!فرق إيقاف'){if(!isAdmin(user))return deny();teamMode=t==='!فرق تشغيل';resetTeamScores();return send(teamMode?'⚔️ تم تفعيل حرب الفرق.':'تم إيقاف حرب الفرق.');}
+  const teamJoin=t.match(/^!فريق\s+(أحمر|احمر|أزرق|ازرق)$/);
+  if(teamJoin){const team=/أحمر|احمر/.test(teamJoin[1])?'red':'blue';joinTeam(user,team);return send(`✅ ${user} انضم إلى ${teamLabel(team)}`);}
   if (['!مشرفين','!مشرفون'].includes(t)) {
     const a = loadAdmins();
     if (!a.size) return send(`👑 لا يوجد مشرفون بعد`);
