@@ -2,12 +2,12 @@
 'use strict';
 
 // ╔══════════════════════════════════════════════════════════╗
-// ║  🔤 لغويات الشات v1.0.1 🔒                               ║
-// ║  • يعرض ويشغّل 5 مسابقات من مجلد لغويات فقط       ║
+// ║  🔤 لغويات الشات v1.1.0 🔒                               ║
+// ║  • يعرض ويشغّل 15 مسابقة من مجلد لغويات فقط       ║
 // ║  • يحتوي كل ملف على 200 سؤال مختلف                  ║
 // ╚══════════════════════════════════════════════════════════╝
 
-const VERSION = '1.0.1';
+const VERSION = '1.1.0';
 const BRAND = 'لغويات';
 const PAGE_SIZE = 15;
 const QUESTIONS_FOLDER = 'لغويات';
@@ -23,7 +23,17 @@ const GAMES = [
   { key:"أضداد", title:"أضداد", eventGame:true, textGame:true, dataFile:"اضداد.txt", intro:"هات عكس الكلمة بدقة", emoji:"↔️" },
   { key:"جموع", title:"جموع", eventGame:true, textGame:true, dataFile:"جموع.txt", intro:"حوّل المفرد إلى جمعه الصحيح", emoji:"📚" },
   { key:"مفرد", title:"مفرد", eventGame:true, textGame:true, dataFile:"مفرد.txt", intro:"استخرج المفرد الصحيح من الجمع", emoji:"📖" },
-  { key:"تراكيب", title:"تراكيب", eventGame:true, textGame:true, dataFile:"تكوين.txt", intro:"أكمل التركيب اللغوي بالكلمة المناسبة", emoji:"🧩" }
+  { key:"تراكيب", title:"تراكيب", eventGame:true, textGame:true, dataFile:"تكوين.txt", intro:"أكمل التركيب اللغوي بالكلمة المناسبة", emoji:"🧩" },
+  { key:"مثنى", title:"المثنى", eventGame:true, textGame:true, dataFile:"مثنى.txt", intro:"حوّل المفرد إلى المثنى الصحيح", emoji:"🔢" },
+  { key:"نوع", title:"أنواع الكلمة", eventGame:true, textGame:true, dataFile:"نوع.txt", intro:"ميّز بين الاسم والفعل", emoji:"📚" },
+  { key:"حروف", title:"عدد الحروف", eventGame:true, textGame:true, dataFile:"حروف.txt", intro:"احسب عدد حروف الكلمة", emoji:"🔠" },
+  { key:"اول_حرف", title:"الحرف الأول", eventGame:true, textGame:true, dataFile:"اول_حرف.txt", intro:"اكتشف الحرف الذي تبدأ به الكلمة", emoji:"🔤" },
+  { key:"اخر_حرف", title:"الحرف الأخير", eventGame:true, textGame:true, dataFile:"اخر_حرف.txt", intro:"حدّد الحرف الذي تنتهي به الكلمة", emoji:"🔡" },
+  { key:"ترتيب", title:"رتّب الحروف", eventGame:true, textGame:true, dataFile:"ترتيب.txt", intro:"أعد ترتيب الحروف لتكوين الكلمة", emoji:"🔀" },
+  { key:"شمسية", title:"اللام الشمسية والقمرية", eventGame:true, textGame:true, dataFile:"شمسية.txt", intro:"ميّز اللام الشمسية من القمرية", emoji:"☀️" },
+  { key:"همزة", title:"همزة الوصل والقطع", eventGame:true, textGame:true, dataFile:"همزة.txt", intro:"حدّد نوع الهمزة في بداية الكلمة", emoji:"✍️" },
+  { key:"تاء", title:"التاء المربوطة والمفتوحة", eventGame:true, textGame:true, dataFile:"تاء.txt", intro:"ميّز نوع التاء في آخر الكلمة", emoji:"📝" },
+  { key:"مد", title:"حروف المد", eventGame:true, textGame:true, dataFile:"مد.txt", intro:"استخرج حرف المد من الكلمة", emoji:"📖" }
 ];
 
 const EMOJI_MAP = {
@@ -1217,7 +1227,7 @@ async function handleCommand(text, user) {
   if (['!مساعدة','!أوامر','!اوامر','!help'].includes(t)) {
     send(`📖 أوامر ${BRAND}:\n` +
       `━━━ 📋 للجميع ━━━\n` +
-      `!م — عرض المسابقات الـ5 من مجلد لغويات\n!قائمة — ملخص\n!قائمةN — صفحة N\n` +
+      `!م — عرض المسابقات الـ15 من مجلد لغويات\n!قائمة — ملخص\n!قائمةN — صفحة N\n` +
       `!نقاط — الجولة + كل المتصدرين (6/قائمة)\n!توب — أفضل 10\n!مشرفين — قائمة المشرفين\n` +
       `━━━ 🔒 للمشرفين ━━━\n` +
       `!بدء / !انهاء / !تجاوز\n` +
